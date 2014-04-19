@@ -33,21 +33,6 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>autopaste</key>
-				<true/>
-				<key>clipboardtext</key>
-				<string>{query}</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.clipboard</string>
-			<key>uid</key>
-			<string>D96D2348-AF6D-492A-B0AF-B822FFFD63F9</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>argumenttype</key>
 				<integer>1</integer>
 				<key>escaping</key>
@@ -109,12 +94,20 @@ def generate_feedback_results(ip_query):
             }
         else: # query success
             data = info['data']
+
+            title = u'%s 位于 %s %s %s' % (data['ip'], data['country'],
+                    data['region'], data['city'])
+
+            if data['isp']:
+                subtitle = u'运营商: %s %s' % (data['area'], data['isp'])
+            else:
+                subtitle = None
+
             kwargs = {
-                'title': u'%s %s %s' % (data['country'], data['region'],
-                                       data['city']),
-                'subtitle': u'运营商: %s %s' % (data['area'], data['isp']),
+                'title': title,
+                'subtitle': subtitle,
+                'arg': '%s\n%s' % (title, subtitle)
             }
-            kwargs['arg'] = '%s\n%s' % (kwargs['title'], kwargs['subtitle'])
 
         fb.addItem(**kwargs)
 
@@ -142,6 +135,21 @@ if __name__ == '__main__':
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
 			<string>7367F5F3-AA5B-46B0-B220-5721AA879147</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<true/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>D96D2348-AF6D-492A-B0AF-B822FFFD63F9</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
